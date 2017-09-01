@@ -24,7 +24,10 @@
                 <div class="entry-list single">
                     <article>
                         <h2><a href="{{ url_for('detail', entry_id=entry.id) }}">{{ entry.title }}</a></h2>
-                        <time datetime="{{ entry.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">{{ entry.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</time>
+                        <div class="entry">
+                            <h3>Date: </h3>
+                            <p>{{ entry.date.strftime('%d-%m-%Y') }}</p>
+                        </div>
                         <div class="entry">
                             <h3>Time Spent: </h3>
                             <p>{{ entry.timespent }}</p>

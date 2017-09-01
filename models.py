@@ -7,15 +7,15 @@ DATABASE = SqliteDatabase('learning.db')
 
 
 class Entry(Model):
-    timestamp = DateTimeField(default=datetime.datetime.now)
     title = CharField()
+    date = DateTimeField(default=datetime.date.today)
     timespent = CharField()
     what_learned = TextField()
     resources = TextField()
 
     class Meta:
         database = DATABASE
-        order_by = ('-timestamp',)
+        order_by = ('-date',)
 
 
 
