@@ -18,3 +18,5 @@ class EntryForm(Form):
     resources = TextAreaField(
         "Resources",
         validators=[DataRequired()])
+
+
