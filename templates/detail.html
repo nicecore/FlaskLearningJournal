@@ -26,7 +26,7 @@
                         <h2><a href="{{ url_for('detail', entry_id=entry.id) }}">{{ entry.title }}</a></h2>
                         <div class="entry">
                             <h3>Date: </h3>
-                            <p>{{ entry.date.strftime('%d-%m-%Y') }}</p>
+                            <p>{{ entry.date.strftime('%m/%d/%Y') }}</p>
                         </div>
                         <div class="entry">
                             <h3>Time Spent: </h3>

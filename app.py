@@ -1,5 +1,5 @@
 """Learning Journal, a Flask web app by Adam Cameron
-for the Treehouse TechDegree"""
+for the Treehouse Python Web Development TechDegree"""
 
 from flask import (Flask, g, render_template, flash, redirect, url_for,
                     abort)
@@ -9,29 +9,21 @@ from flask_login import (LoginManager, login_user,
 import forms
 import models
 
+
+# debug, port, and host properties of app.run
 DEBUG = True
 PORT = 8000
 HOST = "0.0.0.0"
 
+# Instantiate app and provide secret key
 app = Flask(__name__)
 app.secret_key = 'sadijweoirf9347yr0wqdfhuqibduafwe'
 
-# Do we need the following stuff? Not if there's no user/logging in to do, correct?
-
-# login_manager = LoginManager()
-# login_manager.init_app(app)
-# login_manager.login_view = 'login'
-
-# @login_manager.user_loader
-# def load_user(userid):
-#     try:
-#         return models.User.get(models.User.id == userid)
-#     except models.DoesNotExist:
-#         return None
 
 @app.before_request
 def before_request():
-    """Connect to database before each request and set g.user to current_user"""
+    """Connect to database before each request and 
+    set g.user to current_user"""
     g.db = models.DATABASE
     g.db.connect()
     # g.user = current_user
@@ -42,6 +34,7 @@ def after_request(response):
     """Close database connection after each request"""
     g.db.close()
     return response
+
 
 # Index/list of entries view
 @app.route('/entries')
@@ -64,6 +57,7 @@ def new():
     if form.validate_on_submit():
         models.Entry.create(
             title=form.title.data,
+            date = form.date.data,
             timespent=form.timespent.data,
             what_learned=form.what_learned.data,
             resources=form.resources.data
@@ -79,6 +73,7 @@ def edit(entry_id):
     form = forms.EntryForm(obj=entry)
     if form.validate_on_submit():
         entry.title = form.title.data
+        entry.date = form.date.data
         entry.timespent = form.timespent.data
         entry.what_learned = form.what_learned.data
         entry.resources = form.resources.data

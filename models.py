@@ -8,7 +8,7 @@ DATABASE = SqliteDatabase('learning.db')
 
 class Entry(Model):
     title = CharField()
-    date = DateTimeField(default=datetime.date.today)
+    date = DateTimeField()
     timespent = CharField()
     what_learned = TextField()
     resources = TextField()

@@ -25,7 +25,7 @@
                     {% for entry in stream %}
                     <article>
                         <h2><a href="{{ url_for('detail', entry_id=entry.id) }}">{{ entry.title }}</a></h2>
-                        <time datetime="{{ entry.date.strftime('%Y-%m-%d') }}">{{ entry.date.strftime('%Y-%m-%d %H:%M:%S') }}</time>
+                        <time datetime="{{ entry.date.strftime('%m-%d-%Y') }}">{{ entry.date.strftime('%m/%d/%y') }}</time>
                     </article>
                     {% endfor %}
                 </div>
