@@ -1,11 +1,7 @@
 """Learning Journal, a Flask web app by Adam Cameron
 for the Treehouse Python Web Development TechDegree"""
 
-from flask import (Flask, g, render_template, flash, redirect, url_for,
-                    abort)
-from flask_bcrypt import check_password_hash
-from flask_login import (LoginManager, login_user, 
-                        logout_user, login_required, current_user)
+from flask import (Flask, render_template, flash, redirect, url_for)
 import forms
 import models
 
@@ -19,20 +15,19 @@ HOST = "0.0.0.0"
 app = Flask(__name__)
 app.secret_key = 'sadijweoirf9347yr0wqdfhuqibduafwe'
 
+db = models.DATABASE
 
 @app.before_request
 def before_request():
     """Connect to database before each request and 
     set g.user to current_user"""
-    g.db = models.DATABASE
-    g.db.connect()
-    # g.user = current_user
+    db.connect()
 
 
 @app.after_request
 def after_request(response):
     """Close database connection after each request"""
-    g.db.close()
+    db.close()
     return response
 
 
@@ -51,6 +46,7 @@ def detail(entry_id):
     return render_template('detail.html', entry=entry)
 
 
+# New entry route and view
 @app.route('/new', methods=("GET", "POST"))
 def new():
     form = forms.EntryForm()
@@ -67,6 +63,7 @@ def new():
     return render_template('new.html', form=form)
 
 
+# Edit entry route and view
 @app.route('/edit/<int:entry_id>', methods=("GET", "POST"))
 def edit(entry_id):
     entry = models.Entry.get(models.Entry.id == entry_id)
@@ -82,15 +79,13 @@ def edit(entry_id):
     return render_template('edit.html', form=form, entry=entry)
 
 
+# Delete entry route and view
 @app.route('/delete/<int:entry_id>')
 def delete(entry_id):
     entry = models.Entry.get(models.Entry.id == entry_id)
     entry.delete_instance()
     flash("Entry deleted!", "success")
     return redirect(url_for('list'))
-
-
-
 
 
 # Initialize database, create database tables and run Flask app

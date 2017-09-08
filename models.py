@@ -1,14 +1,12 @@
 from peewee import *
 import datetime
-from flask_login import UserMixin
-from flask_bcrypt import generate_password_hash
 
 DATABASE = SqliteDatabase('learning.db')
 
 
 class Entry(Model):
     title = CharField()
-    date = DateTimeField()
+    date = DateField()
     timespent = CharField()
     what_learned = TextField()
     resources = TextField()
@@ -16,11 +14,6 @@ class Entry(Model):
     class Meta:
         database = DATABASE
         order_by = ('-date',)
-
-
-
-
-
 
 
 
